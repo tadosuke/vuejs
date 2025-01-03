@@ -1,3 +1,10 @@
+/**
+ * 数値の直接入力が可能なスライダーコンポーネント
+ * 
+ * @component
+ * @example
+ * <NumberSlider :min="0" :max="100" :step="50" />
+ */
 export default {
   name: 'NumberSlider',
 
@@ -14,8 +21,14 @@ export default {
       default: 100,
     },
 
+    // 現在の値
+    value: {
+      type: Number,
+      default: 0,
+    },
+
     // 値の変化量
-    variation: {
+    step: {
       type: Number,
       required: false,
       default: 1,
@@ -24,7 +37,7 @@ export default {
 
   data() {
     return {
-      currentValue: this.min,
+      currentValue: this.value,
 
       // ウィジェット全体のスタイル
       numericsliderStyle: {
@@ -60,7 +73,7 @@ export default {
       value = Math.min(Math.max(value, this.min), this.max);
 
       // 刻みに従った値に丸める
-      value = Math.round(value / this.variation) * this.variation;
+      value = Math.round(value / this.step) * this.step;
 
       // 更新と修正された値の再適用
       this.currentValue = value;
@@ -70,7 +83,7 @@ export default {
     // 現在の値を範囲内に補正
     validateValue() {
       this.currentValue = Math.min(Math.max(this.currentValue, this.min), this.max);
-      this.currentValue = Math.round(this.currentValue / this.variation) * this.variation;
+      this.currentValue = Math.round(this.currentValue / this.step) * this.step;
     },
   },
 
@@ -80,7 +93,7 @@ export default {
         type="number"
         :min="min"
         :max="max"
-        :step="variation"
+        :step="step"
         :value="currentValue"
         @input="updateValue"
         @blur="validateValue"
@@ -91,7 +104,7 @@ export default {
         type="range"
         :min="min"
         :max="max"
-        :step="variation"
+        :step="step"
         v-model.number="currentValue"
         class="numericslider-range"
         :style="rangeStyle"
