@@ -1,20 +1,27 @@
 export default {
   name: 'NumberSlider',
+
   props: {
+    // 最小値
     min: {
       type: Number,
-      required: true,
+      default: 0,
     },
+
+    // 最大値
     max: {
       type: Number,
-      required: true,
+      default: 100,
     },
+
+    // 値の変化量
     variation: {
       type: Number,
-      required: true,
+      required: false,
       default: 1,
     },
   },
+
   data() {
     return {
       currentValue: this.min,
@@ -36,7 +43,9 @@ export default {
       },      
     };
   },
+
   methods: {
+    // 値を更新する
     updateValue(event) {
       let value = event.target.value;
 
@@ -64,6 +73,7 @@ export default {
       this.currentValue = Math.round(this.currentValue / this.variation) * this.variation;
     },
   },
+
   template: `
     <div class="numericslider" :style="numericsliderStyle">
       <input
@@ -74,7 +84,7 @@ export default {
         :value="currentValue"
         @input="updateValue"
         @blur="validateValue"
-        class="numericslider_number"
+        class="numericslider-number"
         :style="numberStyle"
       />
       <input
@@ -83,7 +93,7 @@ export default {
         :max="max"
         :step="variation"
         v-model.number="currentValue"
-        class="numericslider_range"
+        class="numericslider-range"
         :style="rangeStyle"
       />
     </div>
