@@ -3,7 +3,7 @@
  * 
  * @component
  * @example
- * <NumberSlider :min="0" :max="100" :step="50" />
+ * <NumericSlider :min="0" :max="100" :value="10" :step="1"></NumericSlider>
  */
 export default {
   name: 'NumberSlider',
